@@ -4,14 +4,23 @@
   "description": "realtime drawing game (catchmind) cloning for practice",
   "main": "index.js",
   "repository": "https://github.com/JunghyoMoon/guesswhat",
-  "author": "JungHyoMoon <dsinhome70\n@gmail.com>",
+  "author": "JungHyoMoon <dsinhome70@gmail.com>",
   "license": "MIT",
   "private": null,
   "dependencies": {
+    "@babel/core": "^7.8.3",
+    "@babel/node": "^7.8.3",
+    "@babel/preset-env": "^7.8.3",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "pug": "^2.0.4",
     "socket.io": "^2.3.0"
   },
   "devDependencies": {
-    "express": "^4.17.1",
     "nodemon": "^2.0.2"
+  },
+  "scripts": {
+    "dev:server": "nodemon --exec babel-node src/server.js",
+    "dev:assets": ""
   }
 }
