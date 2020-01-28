@@ -8,11 +8,12 @@ sass.compiler = require("node-sass");
 const paths = {
   styles: {
     src: "assets/scss/styles.scss",
-    dest: "src/static/styles"
+    dest: "src/static/styles",
+    watch: "assets/scss/**/*.scss"
   }
 };
 
-export function styles() {
+function styles() {
   return gulp
     .src(paths.styles.src)
     .pipe(sass())
@@ -25,3 +26,11 @@ export function styles() {
     .pipe(minifyCSS())
     .pipe(gulp.dest(paths.styles.dest));
 }
+
+function watchFiles() {
+  gulp.watch(paths.styles.watch, styles);
+}
+
+const dev = gulp.series([styles, watchFiles]);
+
+export default dev;

@@ -31,6 +31,6 @@
   },
   "scripts": {
     "dev:server": "nodemon --exec babel-node src/server.js",
-    "build:styles": "gulp styles"
+    "dev:assets": "gulp"
   }
 }
