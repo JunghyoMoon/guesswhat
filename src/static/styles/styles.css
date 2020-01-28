@@ -1,2 +1,16 @@
+@-webkit-keyframes sexy {
+  from {
+    color: red; }
+  to {
+    color: blue; } }
+
+@keyframes sexy {
+  from {
+    color: red; }
+  to {
+    color: blue; } }
+
 body {
-  background-color: red; }
+  background-color: red;
+  position: -webkit-sticky;
+  position: sticky; }
