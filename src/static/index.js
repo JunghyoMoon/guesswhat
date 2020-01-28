@@ -1,5 +1,18 @@
 const socket = io("/");
 
-socket.on("hello", () => console.log("Somebody said hello!"));
+function sendMessage(message) {
+  socket.emit("newMessage", { message });
+  console.log(`You: ${message}`);
+}
 
-socket.emit("howdy!");
+function setNickName(nickName) {
+  socket.emit("setNickName", { nickName });
+  console.log(`Your nickname is ${nickName}`);
+}
+
+function handleMessageNotif(data) {
+  const { message, nickName } = data;
+  console.log(`${nickName}: ${message}`);
+}
+
+socket.on("messageNotif", handleMessageNotif);
