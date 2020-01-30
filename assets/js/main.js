@@ -1,15 +1,26 @@
-import { handleMessageNotif } from "./chat";
+const body = document.querySelector("body");
+const loginForm = document.getElementById("jsLogin");
 
-const socket = io("/");
+const NICKNAME = "nickName";
+const LOGGED_OUT = "loggedOut";
+const LOGGED_IN = "loggedIn";
 
-function sendMessage(message) {
-  socket.emit("newMessage", { message });
-  console.log(`You: ${message}`);
+const nickName = localStorage.getItem(NICKNAME);
+
+if (nickName === null) {
+  body.className = LOGGED_OUT;
+} else {
+  body.className = LOGGED_IN;
 }
 
-function setNickName(nickName) {
-  socket.emit("setNickName", { nickName });
-  console.log(`Your nickname is ${nickName}`);
-}
+const handleFormSubmit = event => {
+  event.preventDefault();
+  const input = loginForm.querySelector("input");
+  const { value } = input;
+  localStorage.setItem(NICKNAME, value);
+  input.value = "";
+};
 
-socket.on("messageNotif", handleMessageNotif);
+if (loginForm) {
+  loginForm.addEventListener("submit", handleFormSubmit);
+}
