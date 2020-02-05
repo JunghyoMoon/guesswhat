@@ -3,6 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import socketIO from "socket.io";
 import logger from "morgan";
+import socketController from "./socketController";
 
 dotenv.config();
 
@@ -23,14 +24,4 @@ const server = app.listen(PORT, handleListening);
 
 const io = socketIO.listen(server);
 
-io.on("connection", socket => {
-  socket.on("newMessage", ({ message }) => {
-    socket.broadcast.emit("messageNotif", {
-      message,
-      nickName: socket.nickName || "noname"
-    });
-  });
-  socket.on("setNickName", ({ nickName }) => {
-    socket.nickName = nickName;
-  });
-});
+io.on("connection", socket => socketController(socket));
