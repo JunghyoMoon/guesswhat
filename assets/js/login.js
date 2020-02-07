@@ -8,8 +8,8 @@ const LOGGED_IN = "loggedIn";
 const nickName = localStorage.getItem(NICKNAME);
 
 const logIn = nickName => {
-  const socket = io("/");
-  socket.emit("setNickName", { nickName });
+  window.socket = io("/");
+  window.socket.emit(window.events.setNickName, { nickName });
 };
 
 if (nickName === null) {
