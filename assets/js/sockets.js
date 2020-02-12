@@ -4,12 +4,10 @@ let socket = null;
 
 export const getSocket = () => socket;
 
-export const updateSocket = newSocket => {
-  socket = newSocket;
-};
+export const updateSocket = aSocket => (socket = aSocket);
 
-export const initSockets = newSocket => {
+export const initSockets = aSocket => {
   const { events } = window;
-  updateSocket(newSocket);
-  newSocket.on(events.newUser, handleNewUser);
+  updateSocket(aSocket);
+  aSocket.on(events.newUser, handleNewUser);
 };

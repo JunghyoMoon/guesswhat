@@ -1,4 +1,4 @@
-import { initSocket } from "./sockets";
+import { initSockets } from "./sockets";
 
 const body = document.querySelector("body");
 const loginForm = document.getElementById("jsLogin");
@@ -13,7 +13,7 @@ const logIn = nickName => {
   // eslint-disable-next-line no-undef
   const socket = io("/");
   socket.emit(window.events.setNickname, { nickName });
-  initSocket(socket);
+  initSockets(socket);
 };
 
 if (nickName === null) {
