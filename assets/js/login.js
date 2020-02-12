@@ -12,7 +12,7 @@ const nickName = localStorage.getItem(NICKNAME);
 const logIn = nickName => {
   // eslint-disable-next-line no-undef
   const socket = io("/");
-  socket.emit(window.events.setNickname, { nickName });
+  socket.emit(window.events.setNickName, { nickName });
   initSockets(socket);
 };
 
