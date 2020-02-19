@@ -1,14 +1,18 @@
 import events from "./events";
 
+let sockets = [];
+
 const socketController = socket => {
   const broadcast = (event, data) => socket.broadcast.emit(event, data);
 
   socket.on(events.setNickName, ({ nickName }) => {
     socket.nickName = nickName;
+    sockets.push({ id: socket.id, nickName, point: 0 });
     broadcast(events.newUser, { nickName });
   });
 
   socket.on(events.disconnect, () => {
+    sockets = sockets.filter(aSocket => aSocket.id !== socket.id);
     broadcast(events.disconnected, { nickName: socket.nickName });
   });
 
@@ -28,5 +32,7 @@ const socketController = socket => {
     broadcast(events.filled, { color });
   });
 };
+
+// setInterval(() => console.log(sockets), 3000);
 
 export default socketController;
