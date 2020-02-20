@@ -17,8 +17,10 @@ const socketController = (socket, io) => {
       inProgress = true;
       const painter = choosePainter();
       word = chooseWord();
-      io.to(painter.id).emit(events.painterNotif, { word });
-      superBroadcast(events.gameStarted);
+      setTimeout(() => {
+        superBroadcast(events.gameStarted);
+        io.to(painter.id).emit(events.painterNotif, { word });
+      }, 2000);
     }
   };
 
@@ -29,7 +31,7 @@ const socketController = (socket, io) => {
     sockets.push({ id: socket.id, nickName, point: 0 });
     broadcast(events.newUser, { nickName });
     sendPlayerUpdate();
-    if (sockets.length === 1) {
+    if (sockets.length === 2) {
       startGame();
     }
   });
