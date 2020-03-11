@@ -55,7 +55,14 @@ const socketController = (socket, io) => {
   });
 
   socket.on(events.sendMsg, ({ message }) => {
-    broadcast(events.newMsg, { message, nickName: socket.nickName });
+    if (message === word) {
+      superBroadcast(events.newMsg, {
+        message: `Winner is ${socket.nickName}, and Answer is: ${word}`,
+        nickName: "Bot"
+      });
+    } else {
+      broadcast(events.newMsg, { message, nickName: socket.nickName });
+    }
   });
 
   socket.on(events.beginPath, ({ x, y }) => {
