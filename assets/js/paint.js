@@ -126,8 +126,9 @@ export const enableCanvas = () => {
 
 export const hideCtrls = () => (ctrls.style.opacity = 0);
 export const showCtrls = () => (ctrls.style.opacity = 1);
+export const resetCanvas = () => fill("#fff");
 
 if (canvas) {
-  enableCanvas();
   canvas.addEventListener("contextmenu", handleCM);
+  hideCtrls();
 }

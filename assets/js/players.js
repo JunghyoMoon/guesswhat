@@ -1,4 +1,10 @@
-import { disableCanvas, hideCtrls, enableCanvas, showCtrls } from "./paint";
+import {
+  disableCanvas,
+  hideCtrls,
+  enableCanvas,
+  showCtrls,
+  resetCanvas
+} from "./paint";
 
 const board = document.getElementById("jspBoard");
 const notifs = document.getElementById("jsNotifs");
@@ -30,4 +36,11 @@ export const handlePainterNotif = ({ word }) => {
   showCtrls();
   setNotifs("");
   setNotifs(`You are the painter! answer is: ${word}`);
+};
+
+export const handleGameEnded = () => {
+  setNotifs("Game Ended!");
+  disableCanvas();
+  hideCtrls();
+  resetCanvas();
 };

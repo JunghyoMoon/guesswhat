@@ -4,6 +4,7 @@ import { chooseWord } from "../assets/js/words";
 let sockets = [];
 let inProgress = false;
 let word = null;
+let painter = null;
 
 const choosePainter = () => sockets[Math.floor(Math.random() * sockets.length)];
 
@@ -15,7 +16,7 @@ const socketController = (socket, io) => {
   const startGame = () => {
     if (inProgress === false) {
       inProgress = true;
-      const painter = choosePainter();
+      painter = choosePainter();
       word = chooseWord();
       setTimeout(() => {
         superBroadcast(events.gameStarted);
@@ -24,7 +25,10 @@ const socketController = (socket, io) => {
     }
   };
 
-  const quitGame = () => (inProgress = false);
+  const quitGame = () => {
+    inProgress = false;
+    superBroadcast(events.gameEnded);
+  };
 
   socket.on(events.setNickName, ({ nickName }) => {
     socket.nickName = nickName;
@@ -40,6 +44,10 @@ const socketController = (socket, io) => {
     sockets = sockets.filter(aSocket => aSocket.id !== socket.id);
     if (sockets.length === 1) {
       quitGame();
+    } else if (painter) {
+      if (painter.id === socket.id) {
+        quitGame();
+      }
     }
     broadcast(events.disconnected, { nickName: socket.nickName });
     sendPlayerUpdate();
