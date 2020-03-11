@@ -14,15 +14,17 @@ const socketController = (socket, io) => {
   const sendPlayerUpdate = () =>
     superBroadcast(events.playerUpdate, { sockets });
   const startGame = () => {
-    if (inProgress === false) {
-      inProgress = true;
-      painter = choosePainter();
-      word = chooseWord();
-      superBroadcast(events.gameStarting);
-      setTimeout(() => {
-        superBroadcast(events.gameStarted);
-        io.to(painter.id).emit(events.painterNotif, { word });
-      }, 5000);
+    if (sockets.length > 1) {
+      if (inProgress === false) {
+        inProgress = true;
+        painter = choosePainter();
+        word = chooseWord();
+        superBroadcast(events.gameStarting);
+        setTimeout(() => {
+          superBroadcast(events.gameStarted);
+          io.to(painter.id).emit(events.painterNotif, { word });
+        }, 5000);
+      }
     }
   };
 
