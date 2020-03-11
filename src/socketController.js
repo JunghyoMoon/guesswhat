@@ -31,6 +31,17 @@ const socketController = (socket, io) => {
     superBroadcast(events.gameEnded);
   };
 
+  const addPoint = id => {
+    sockets = sockets.map(socket => {
+      if (socket.id === id) {
+        socket.point += 10;
+      }
+      return socket;
+    });
+    sendPlayerUpdate();
+    quitGame();
+  };
+
   socket.on(events.setNickName, ({ nickName }) => {
     socket.nickName = nickName;
     sockets.push({ id: socket.id, nickName, point: 0 });
@@ -60,6 +71,7 @@ const socketController = (socket, io) => {
         message: `Winner is ${socket.nickName}, and Answer is: ${word}`,
         nickName: "Bot"
       });
+      addPoint(socket.id);
     } else {
       broadcast(events.newMsg, { message, nickName: socket.nickName });
     }
