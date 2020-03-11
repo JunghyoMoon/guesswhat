@@ -44,3 +44,5 @@ export const handleGameEnded = () => {
   hideCtrls();
   resetCanvas();
 };
+
+export const handleGameStarting = () => setNotifs("Game will start soon");

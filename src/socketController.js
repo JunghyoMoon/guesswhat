@@ -18,10 +18,11 @@ const socketController = (socket, io) => {
       inProgress = true;
       painter = choosePainter();
       word = chooseWord();
+      superBroadcast(events.gameStarting);
       setTimeout(() => {
         superBroadcast(events.gameStarted);
         io.to(painter.id).emit(events.painterNotif, { word });
-      }, 2000);
+      }, 5000);
     }
   };
 
