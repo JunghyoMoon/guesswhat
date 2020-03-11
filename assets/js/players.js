@@ -5,6 +5,7 @@ import {
   showCtrls,
   resetCanvas
 } from "./paint";
+import { disableChat } from "./chat";
 
 const board = document.getElementById("jspBoard");
 const notifs = document.getElementById("jsNotifs");
@@ -35,6 +36,7 @@ export const handlePainterNotif = ({ word }) => {
   enableCanvas();
   showCtrls();
   setNotifs("");
+  disableChat();
   setNotifs(`You are the painter! answer is: ${word}`);
 };
 
