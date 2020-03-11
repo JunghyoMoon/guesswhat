@@ -5,7 +5,7 @@ import {
   showCtrls,
   resetCanvas
 } from "./paint";
-import { disableChat } from "./chat";
+import { disableChat, enableChat } from "./chat";
 
 const board = document.getElementById("jspBoard");
 const notifs = document.getElementById("jsNotifs");
@@ -30,6 +30,7 @@ export const handleGameStarted = () => {
   setNotifs("");
   disableCanvas();
   hideCtrls();
+  enableChat();
 };
 
 export const handlePainterNotif = ({ word }) => {
