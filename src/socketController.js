@@ -29,6 +29,7 @@ const socketController = (socket, io) => {
   const quitGame = () => {
     inProgress = false;
     superBroadcast(events.gameEnded);
+    setTimeout(() => startGame(), 3000);
   };
 
   const addPoint = id => {
