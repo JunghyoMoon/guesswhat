@@ -5,6 +5,7 @@ let sockets = [];
 let inProgress = false;
 let word = null;
 let painter = null;
+let timeout = null;
 
 const choosePainter = () => sockets[Math.floor(Math.random() * sockets.length)];
 
@@ -23,6 +24,7 @@ const socketController = (socket, io) => {
         setTimeout(() => {
           superBroadcast(events.gameStarted);
           io.to(painter.id).emit(events.painterNotif, { word });
+          timeout = setTimeout(quitGame, 30000);
         }, 5000);
       }
     }
@@ -31,6 +33,9 @@ const socketController = (socket, io) => {
   const quitGame = () => {
     inProgress = false;
     superBroadcast(events.gameEnded);
+    if (timeout !== null) {
+      clearTimeout(timeout);
+    }
     setTimeout(() => startGame(), 3000);
   };
 
@@ -43,6 +48,7 @@ const socketController = (socket, io) => {
     });
     sendPlayerUpdate();
     quitGame();
+    clearTimeout(timeout);
   };
 
   socket.on(events.setNickName, ({ nickName }) => {
@@ -50,9 +56,7 @@ const socketController = (socket, io) => {
     sockets.push({ id: socket.id, nickName, point: 0 });
     broadcast(events.newUser, { nickName });
     sendPlayerUpdate();
-    if (sockets.length === 2) {
-      startGame();
-    }
+    startGame();
   });
 
   socket.on(events.disconnect, () => {
